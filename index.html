@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bhavanshu Sharma | Data Analyst</title>
   
-  <!-- Google Fonts: Space Grotesk -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -51,10 +50,8 @@
       transition: background-color 0.3s, color 0.3s;
       cursor: none;
       overflow-x: hidden;
-      /* MODIFIED: Gradient only for dark mode, set via JS */
     }
 
-    /* MODIFIED: Moved gradient to a specific class for dark mode */
     body.dark-gradient {
         background: linear-gradient(45deg, #080808, #1a1a1a, #080808, #001f3f);
         background-size: 400% 400%;
@@ -322,8 +319,9 @@
         border-top: 1px solid var(--border-color);
         padding-top: 4rem;
     }
-    .contact-text h1 {
-        font-size: clamp(2rem, 4vw, 3rem);
+    /* MODIFIED: Explicitly left-align contact title on desktop */
+    #contact .section-title {
+        text-align: left;
         margin-bottom: 1rem;
     }
     .contact-text p {
@@ -344,6 +342,8 @@
         font-weight: 500;
         position: relative;
         transition: color 0.3s;
+        /* MODIFIED: Allow long links like emails to wrap on small screens */
+        word-break: break-all;
     }
     .contact-links a:hover {
         color: var(--highlight-color);
@@ -436,6 +436,10 @@
       .contact-text, .contact-links {
           text-align: center;
           align-items: center;
+      }
+      /* MODIFIED: Ensure contact title is centered on mobile */
+      #contact .section-title {
+          text-align: center;
       }
     }
 
@@ -556,7 +560,7 @@
     <div class="section-wrapper" id="contact">
       <section class="contact-grid">
         <div class="contact-text">
-          <h1 class="section-title" style="text-align: left; margin-bottom: 1rem;">Let's Connect</h1>
+          <h1 class="section-title">Let's Connect</h1>
           <p>I'm currently open to new opportunities and collaborations. Feel free to reach out if you have a project in mind, or just want to say hello!</p>
         </div>
         <div class="contact-links">
@@ -580,7 +584,6 @@
         const body = document.body;
         const toggleBtn = document.querySelector('.theme-toggle');
         
-        // MODIFIED: Function to apply theme effects
         function applyTheme(isLight) {
             if (isLight) {
                 body.classList.remove('dark-gradient');
@@ -649,7 +652,6 @@
                 this.size = Math.random() * 2.5 + 1;
                 this.speedX = Math.random() * 3 - 1.5;
                 this.speedY = Math.random() * 3 - 1.5;
-                // MODIFIED: Theme-aware particle color
                 if (document.body.classList.contains('light-mode')) {
                     this.color = `hsl(211, 100%, 60%)`;
                 } else {
@@ -812,10 +814,8 @@
         initBgParticles();
 
         function animateBg() {
-            // MODIFIED: Stop animation in light mode
             if (document.body.classList.contains('light-mode')) {
                 bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
-                // We still need to call the next frame to resume if theme changes
                 requestAnimationFrame(animateBg);
                 return;
             }
